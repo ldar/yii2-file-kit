@@ -64,10 +64,22 @@ class Upload extends InputWidget
      * @var string
      */
     public $messagesCategory = 'filekit/widget';
+
+    public $altImgName = 'Uploaded File';
     /**
      * @var bool preview image file or not in the upload box.
      */
     public $previewImage = true;
+
+    /**
+     * @var bool
+     */
+    public $formBuilder=false;
+
+    /**
+     * @var bool
+     */
+    public $required=false;
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -114,6 +126,9 @@ class Upload extends InputWidget
                 'baseUrlAttribute' => 'base_url',
                 'pathAttributeName' => 'path',
                 'baseUrlAttributeName' => 'base_url',
+                'formBuilder' => $this->formBuilder,
+                'required' => $this->required,
+                'altImgName' => $this->altImgName,
                 'messages' => [
                     'maxNumberOfFiles' => Yii::t($this->messagesCategory, 'Maximum number of files exceeded'),
                     'acceptFileTypes' => Yii::t($this->messagesCategory, 'File type not allowed'),

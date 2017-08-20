@@ -406,9 +406,6 @@ class UploadBehavior extends Behavior
                 }
             }
         }
-        if ($file['path'] !== null && $file['base_url'] === null) {
-            $file['base_url'] = $this->getStorage()->baseUrl;
-        }
         return $file;
     }
 }

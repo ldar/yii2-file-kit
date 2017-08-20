@@ -24,7 +24,7 @@ class UploadAsset extends AssetBundle
         ];
 
         $this->js = [
-            YII_DEBUG ? 'js/upload-kit.js' : 'js/upload-kit.min.js'
+            'js/upload-kit.js'
         ];
         parent::init();
     }

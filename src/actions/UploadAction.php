@@ -138,7 +138,7 @@ class UploadAction extends BaseAction
 
                 } else {
                     $output['error'] = true;
-                    $output['errors'] = $validationModel->getFirstError('file');
+                    $output['errors'] = $validationModel->errors;
                 }
             } else {
                 $output['error'] = true;
