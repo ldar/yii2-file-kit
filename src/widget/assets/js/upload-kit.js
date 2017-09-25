@@ -145,52 +145,56 @@
                 var confirm=bootbox.confirm({
                     message: "Do you want to delete a file?",
                     callback: function (result) {
+                        var promise = $.when();
+
                         if (result) {
                             var url = $this.data('url');
                             var form = $this.parents('form');
                             if (url) {
-                                $.ajax({
+                                promise = $.ajax({
                                     url: url,
                                     type: 'DELETE'
                                 });
                             }
-                            var container = $this.parents('.input_container');
-                            $this.parents('.upload-kit-item').remove();
-                            $(".ada-upload-item-delete[item=" + $this.attr('item') + "]").remove();
-                            methods.handleEmptyValue();
-                            methods.checkInputVisibility();
+                            $.when(promise).always(function () {
+                                var container = $this.parents('.input_container');
+                                $this.parents('.upload-kit-item').remove();
+                                $(".ada-upload-item-delete[item=" + $this.attr('item') + "]").remove();
+                                methods.handleEmptyValue();
+                                methods.checkInputVisibility();
 
-                            if (options.formBuilder) {
-                                var id = container.attr('n');
-                                var form_data_id = $('#form').attr('form_data_id');
-                                if (id == undefined) {
-                                    return;
-                                }
-                                $.ajax({
-                                    url: '/forms/delete-item-file',
-                                    type: 'POST',
-                                    data: {'id': id, 'form_data_id': form_data_id},
-                                    success: function (response) {
-                                        if (response.success) {
-                                            container.find('.forms-download-file').remove();
-                                        } else {
-                                            if (typeof response.errors.val) {
-                                                help_block.html(response.errors.val);
+                                if (options.formBuilder) {
+                                    var id = container.attr('n');
+                                    var form_data_id = $('#form').attr('form_data_id');
+                                    if (id == undefined) {
+                                        return;
+                                    }
+                                    $.ajax({
+                                        url: '/forms/delete-item-file',
+                                        type: 'POST',
+                                        data: {'id': id, 'form_data_id': form_data_id},
+                                        success: function (response) {
+                                            if (response.success) {
+                                                container.find('.forms-download-file').remove();
+                                            } else {
+                                                if (typeof response.errors.val) {
+                                                    help_block.html(response.errors.val);
+                                                }
                                             }
+                                            methods.focusBlock();
                                         }
-                                        methods.focusBlock();
-                                    }
-                                });
-                            } else {
-                                $.ajax({
-                                    url: form.attr('action'),
-                                    type: 'POST',
-                                    data: form.serialize(),
-                                    success: function (response) {
-                                        methods.focusBlock();
-                                    }
-                                });
-                            }
+                                    });
+                                } else {
+                                    $.ajax({
+                                        url: form.attr('action'),
+                                        type: 'POST',
+                                        data: form.serialize(),
+                                        success: function (response) {
+                                            methods.focusBlock();
+                                        }
+                                    });
+                                }
+                            });
                         } else {
                             //methods.focusBlock();
                             setTimeout(function() { $container.find('.ada-upload-item-delete').focus(); }, 1000);
