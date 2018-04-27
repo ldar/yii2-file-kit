@@ -186,6 +186,7 @@
                                         data: {'id': id, 'form_data_id': form_data_id},
                                         success: function (response) {
                                             if (response.success) {
+                                                if (options.always !== undefined) options.always();
                                                 container.find('.forms-download-file').remove();
                                             } else {
                                                 if (typeof response.errors.val) {
@@ -201,6 +202,7 @@
                                         type: 'POST',
                                         data: form.serialize(),
                                         success: function (response) {
+                                            if (options.always !== undefined) options.always();
                                             methods.focusBlock();
                                         }
                                     });
