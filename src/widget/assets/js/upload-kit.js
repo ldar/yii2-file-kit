@@ -143,7 +143,18 @@
                 var $this = $(this);
 
                 var confirm=bootbox.confirm({
-                    message: "Do you want to delete a file?",
+                    message: "<div class=\"line-height-1-5\">Do you want to delete a file?</div>",
+                    className: 'main-body-container',
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn btn-primary btn-save'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn btn-default'
+                        }
+                    },
                     callback: function (result) {
                         var promise = $.when();
 
